@@ -1,0 +1,34 @@
+name: Verify Savault Skill
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['skills/**', 'tests/**']
+permissions:
+  contents: read
+jobs:
+  runtime:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned runtime and verify local commands
+        run: node tests/runtime-smoke.cjs
+        env:
+          SAVAULT_SKILL_REPORT: evidence/runtime-smoke.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-${{ matrix.os }}
+          path: evidence/*.json
+          retention-days: 14
+
