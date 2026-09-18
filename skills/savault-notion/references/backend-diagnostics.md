@@ -37,3 +37,19 @@ Run one `--limit 1 --update-existing` canary with the requested enhancements ena
 - only then may a user-authorized full-folder job start.
 
 A completed base-note write with enhancement errors is a failed enhancement acceptance, even when `created` or `updated` is nonzero and `failed` is zero.
+
+## Async ASR and concurrency traps
+
+- A retry key derived only from a CDN media URL is not stable: Xiaohongshu can rotate the path or signed URL between fetches. Derive the same-day ASR idempotency key from the stable source item ID, then hash it before sending it to the service.
+- MP4 container duration and provider-decoded audio duration can differ by a few seconds because of encoder padding. The reservation must include the same narrow tolerance accepted at settlement; accepting a larger settlement than the reservation merely moves the failure into ledger reconciliation.
+- Provider-level success can still contain a failed subtask. When the subtask has no reported usage, settle it as a known no-charge failure so the reservation and concurrency slot are released; the client may then fall back to image interpretation.
+- Ambiguous provider timeouts must keep their accounting reservation, but they must not occupy a concurrency slot forever. Count only recent active reservations for concurrency and retain older rows as audit/budget evidence.
+- Read back both total retained-unknown reservations and recent active reservations. Do not erase payloads or force-settle ambiguous provider outcomes merely to make the counters look clean.
+
+For multi-user operation, verify the database ledger limit, per-account limit, rate limit, CloudBase function status/timeout, and provider behavior separately. Raising concurrency is a production and cost change; use a bounded concurrent probe before claiming the new capacity.
+
+## Notion readback pitfalls
+
+If `ntn pages get` or `ntn datasources query` fails while trying to discover the latest Notion OpenAPI spec, retry with the currently supported explicit `--notion-version` instead of treating the page as empty. Reset per-page variables before every read so one failed response cannot inherit the previous page's title or flags.
+
+The platform's displayed collection count can exceed the number returned by its live collection API (for example, a removed/private item). Report both numbers. Acceptance covers only the source IDs actually returned and written; do not invent or duplicate a sixteenth page to match a badge count.

@@ -71,6 +71,8 @@ Report created/updated/skipped/failed counts and relevant errors. A `partial` jo
 
 Do not treat `status: completed` or `failed: 0` as proof that requested enhancements succeeded. Savault deliberately writes the base note when an optional enhancement fails, so a job can complete after logging ASR, vision, or summary failures. Inspect job progress/logs for enhancement errors and read back a representative Notion page when the user requires transcripts, image interpretation, or AI summaries. Stop before a full-folder run if the canary page lacks the requested sections.
 
+For a full-folder acceptance, query the destination by collection and aggregate every returned page: require an AI summary plus either a transcript or image interpretation according to the available media. Use an explicit supported Notion API version if the CLI's OpenAPI-version discovery returns 403. Report the platform badge count separately from the live API result count; removed or private favorites may make them differ.
+
 Use `jobs get`, `logs --job ID --tail 30`, and `doctor` for bounded diagnostics. `daemon stop` refuses a running operation. Exit codes: 0 success, 1 operation/job failure, 2 invalid input, 130 cancelled wait. Consult `schema` for the exact CLI command set.
 
 ## Optional licensed services
