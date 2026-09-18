@@ -38,6 +38,8 @@ $token = [System.Net.NetworkCredential]::new('', $secret).Password
 Remove-Variable token,secret
 ```
 
+If the user has explicitly authorized reuse of a credential already stored by another local CLI, pipe it directly from that local secret store into `config set --stdin`. Do not print it, place it in a command argument, save an intermediate plaintext file, or claim that an encrypted desktop profile can be copied as plaintext. Verify only with the redacted `status` and `notion check` outputs.
+
 On macOS the same Node helper prompts without echo and pipes JSON directly to the local CLI. The user runs it interactively, replacing the target ID:
 
 ```sh
@@ -65,3 +67,5 @@ If the command reports that the login window opened but the user sees nothing, i
 `config set --stdin` accepts `notion`, `licenseKey`, and `asr`/`vision`/`ai` objects. Content enhancement requires the existing product authorization. For each enhancement, `source` is `gift` (Savault service balance) or `own` (user's provider), and fields include `enabled`, `provider`, `baseUrl`, `model`, `apiKey`. Use `status` for available presets and `schema` for commands. Keep credentials local and pass values through stdin. Activation and service-card redemption accept a plain string on stdin, not a JSON string.
 
 Free usage limits, licensed capabilities and paid provider costs are separate from installation of this free Skill. Do not redeem cards or invoke paid enhancement just to test connectivity.
+
+After redemption, `balance` reports the account's remaining ASR/AI/cost allowance. It does not report the hosted service's global spend cap or upstream provider balance. When a real canary logs `PRICE_REVIEW_REQUIRED` or `SERVICE_BUDGET_EXHAUSTED`, do not issue another card as a repair. Preserve the job ID, inspect its progress, and route maintainers to [backend-diagnostics.md](backend-diagnostics.md).

@@ -19,6 +19,7 @@ This skill controls **Savault CLI profiles**, not the Savault Notion desktop app
 - A working desktop Notion connection does not make `node scripts/savault.cjs notion check` pass, and a confirmed CLI platform login does not log the desktop app in.
 - Do not conclude that the user's Notion account is unconfigured merely because the CLI profile has no token. State which surface was checked.
 - Stay on the CLI path for requests made through this skill. If the user explicitly wants to reuse the desktop app, use only a documented desktop automation entrypoint that exists on that machine; otherwise explain the profile boundary instead of trying to copy encrypted settings or cookies.
+- Do not fall back to the desktop GUI merely because the CLI profile lacks credentials. The CLI supports Notion configuration through `config set --stdin`, product authorization through `license activate --stdin`, and service-card redemption through `license redeem --stdin`. Use those commands or the bundled hidden-input helper.
 
 ## Locate the runtime
 
@@ -34,7 +35,7 @@ In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$
 
 ## Connect accounts
 
-Use `status` and `auth status --platform PLATFORM` before asking for credentials. A saved `confirmed` flag records an earlier login confirmation; collection and sync requests revalidate the session.
+Use `status` and `auth status --platform PLATFORM` before asking for credentials. A saved `confirmed` flag records an earlier login confirmation; it does not prove the current platform page is usable. Run `collections list` or the requested sync to revalidate the live session.
 
 - If Notion is unconfigured, follow [setup.md](references/setup.md). The CLI has no Notion OAuth/login browser: configuration uses a local hidden-input prompt or an existing secret store. Offer to launch that prompt in a **visible local terminal** after obtaining the non-secret target page/database ID. The user enters the token locally; never ask for tokens, cookies or service cards in chat or put their values in command arguments.
 - Run `notion check` to validate an existing target. `notion setup` can create or modify the configured database; use it when requested as part of preparing the destination.
@@ -68,10 +69,22 @@ Stdout is one JSON result; `--progress` streams progress to stderr. Check both e
 
 Report created/updated/skipped/failed counts and relevant errors. A `partial` job is not full success. If a Notion read connector is available within the requested scope, read back the created/updated page; otherwise distinguish the CLI's reported result from an independently verified Notion page. Runtime checks or synthetic tests do not prove real account sync.
 
+Do not treat `status: completed` or `failed: 0` as proof that requested enhancements succeeded. Savault deliberately writes the base note when an optional enhancement fails, so a job can complete after logging ASR, vision, or summary failures. Inspect job progress/logs for enhancement errors and read back a representative Notion page when the user requires transcripts, image interpretation, or AI summaries. Stop before a full-folder run if the canary page lacks the requested sections.
+
 Use `jobs get`, `logs --job ID --tail 30`, and `doctor` for bounded diagnostics. `daemon stop` refuses a running operation. Exit codes: 0 success, 1 operation/job failure, 2 invalid input, 130 cancelled wait. Consult `schema` for the exact CLI command set.
 
 ## Optional licensed services
 
-Basic collection sync and optional ASR, image understanding and AI summarization follow Savault's existing product limits. Configure `asr`, `vision`, or `ai` only when requested. `license activate --stdin`, `license redeem --stdin`, and `balance` manage the user's license/service balance; redemption and paid enhancement are real service operations, not diagnostic probes. The skill is free; runtime/service terms and external provider costs are separate.
+Basic collection sync and optional ASR, image understanding and AI summarization follow Savault's existing product limits. Configure `asr`, `vision`, or `ai` only when requested. `license activate --stdin`, `license redeem --stdin`, and `balance` manage the user's license/service balance; redemption and paid enhancement are real service operations, not diagnostic probes. A successful redemption or a large account balance proves only the user's account entitlement. It does not prove that the shared backend budget, provider balance, or server-side price-review window is available.
+
+Interpret common enhancement errors precisely:
+
+- `DEVICE_NOT_BOUND`: the current CLI profile/device is not bound to the redeemed service account.
+- `PRICE_REVIEW_REQUIRED`: a server-side pricing kill switch expired; issuing or re-entering a card cannot fix it.
+- `SERVICE_BUDGET_EXHAUSTED`: the shared backend spend cap cannot cover the reservation; it is separate from the card/account balance.
+
+Do not ask the user to resend a full card number when `status` already reports `cloud.hasKey: true`. Use the redacted `balance` result, job progress, and the applicable service layer to locate the failure. Maintainers diagnosing the hosted service should read [backend-diagnostics.md](references/backend-diagnostics.md) before using provider or CloudBase administration tools.
+
+The skill is free; runtime/service terms and external provider costs are separate.
 
 Product and support: <https://product.aiprice.store/savault/>. Runtime downloads: <https://github.com/lin113311221/savault-skills/releases/tag/cli-v0.1.0>.
