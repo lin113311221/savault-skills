@@ -11,6 +11,15 @@ metadata:
 
 Use the separately installed Savault CLI to import the user's own saved content into Notion. The runtime supports Windows x64 and macOS 13+ (Apple Silicon / Intel), requires a local graphical desktop for initial platform login, and keeps its configuration separate from the Savault Notion GUI. A cloud-only agent cannot use the user's local login session through this skill.
 
+## Choose the correct Savault surface
+
+This skill controls **Savault CLI profiles**, not the Savault Notion desktop application's profile. Treat them as two separate products even when both are installed:
+
+- CLI configuration and sessions live under `SavaultCLI`; desktop configuration and sessions live under `SavaultNotion`.
+- A working desktop Notion connection does not make `node scripts/savault.cjs notion check` pass, and a confirmed CLI platform login does not log the desktop app in.
+- Do not conclude that the user's Notion account is unconfigured merely because the CLI profile has no token. State which surface was checked.
+- Stay on the CLI path for requests made through this skill. If the user explicitly wants to reuse the desktop app, use only a documented desktop automation entrypoint that exists on that machine; otherwise explain the profile boundary instead of trying to copy encrypted settings or cookies.
+
 ## Locate the runtime
 
 The bundled helpers require Node.js 18+. Resolve this skill's installed directory as `SKILL_DIR`; all helper paths below are relative to it, not the user's project.
@@ -27,9 +36,18 @@ In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$
 
 Use `status` and `auth status --platform PLATFORM` before asking for credentials. A saved `confirmed` flag records an earlier login confirmation; collection and sync requests revalidate the session.
 
-- If Notion is unconfigured, follow [setup.md](references/setup.md). The user enters the token locally through a secure prompt or existing secret store; send configuration through stdin. Do not ask for tokens, cookies or service cards in chat or put their values in command arguments.
+- If Notion is unconfigured, follow [setup.md](references/setup.md). The CLI has no Notion OAuth/login browser: configuration uses a local hidden-input prompt or an existing secret store. Offer to launch that prompt in a **visible local terminal** after obtaining the non-secret target page/database ID. The user enters the token locally; never ask for tokens, cookies or service cards in chat or put their values in command arguments.
 - Run `notion check` to validate an existing target. `notion setup` can create or modify the configured database; use it when requested as part of preparing the destination.
-- Run `auth login --platform xiaohongshu` or `--platform bilibili`. The user completes QR login or platform checks in the opened window. Check `auth status`; use `auth confirm` if completion needs another check. Do not claim login until confirmation succeeds.
+- Run `auth login --platform xiaohongshu` or `--platform bilibili` from a local graphical session. The user completes QR login or platform checks in the opened window. `loginWindowOpened: true` proves only that the daemon accepted the request; it does not prove that the user can see the window. Ask the user to interact only after a visible window is actually present. Check `auth status`; use `auth confirm` if completion needs another check. Do not claim login until confirmation succeeds.
+
+### When an interactive window does not appear
+
+Use `daemon status`, `auth status`, `logs --tail 30`, and the current process state before retrying. Do not start repeated login requests blindly.
+
+- If the daemon is healthy and idle, retry once with `auth login --platform PLATFORM --no-wait` from a visible desktop process, then verify the result.
+- If `daemon status` reports `busy: true` with no sync job, a stale login request may be holding the daemon. Try `daemon stop`; if it returns `BUSY`, report that exact state. Restart only the identified Savault CLI profile after confirming it has no active sync job and the restart is within the user's request.
+- On Windows, a daemon started with a hidden console may still need to be restarted as a visible desktop process before its Electron login window can be presented. Do not equate exit code 0 or an empty stdout with a visible window.
+- After a restart, run `auth login --platform PLATFORM --no-wait`, then read back `auth status` after the user confirms.
 
 ## Select and sync
 
@@ -40,7 +58,7 @@ Use `status` and `auth status --platform PLATFORM` before asking for credentials
    node "$SKILL_DIR/scripts/savault.cjs" sync start --platform xiaohongshu --collection COLLECTION_ID --limit 1 --wait --progress
    ```
 
-   The CLI defaults to one item. Repeat `--collection` for multiple folders. Use `--all` only for an explicit all-collections request. `--limit 0` removes the item limit; do not silently turn a sample import into a full import. Use `--update-existing` when the user asks to refresh existing content; it can replace synced page bodies.
+   The CLI defaults to one item. Repeat `--collection` for multiple folders. Use `--all` only for an explicit all-collections request. `--limit 0` removes the item limit; use it only when the user clearly asks for the whole selected folder, and report the folder's listed count before starting. Distinguish a folder described as “new” from a request for only newly added items. Do not silently turn a sample import into a full import. Use `--update-existing` when the user asks to refresh existing content; it can replace synced page bodies.
 3. Preserve the returned job ID. For longer jobs, omit `--wait` then use `jobs get --job ID` or `jobs wait --job ID`. Do not launch a duplicate job just because a wait timed out.
 4. On a stop request run `sync stop --job ID`. Cancellation is cooperative; inspect the final job state after an in-flight request finishes.
 

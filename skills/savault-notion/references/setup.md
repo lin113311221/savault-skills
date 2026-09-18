@@ -19,7 +19,17 @@ Mac runtime uses ad-hoc signing and is not Apple-notarized. If Gatekeeper blocks
 
 The integration must have access to the intended Notion page/database. Use the user's existing integration and destination when provided; do not create a new integration or database solely because configuration is missing.
 
-The runtime accepts a partial configuration JSON on stdin. PowerShell example for the user to run locally:
+The CLI does not provide a Notion OAuth/login browser. It needs an integration token plus the intended page/database ID. The token must be entered on the user's machine; the target ID is not a secret and may be supplied to the helper as an argument.
+
+Prefer launching the bundled prompt in a visible local terminal:
+
+```powershell
+node scripts/configure-notion.cjs --parent-id REPLACE_WITH_TARGET_ID --parent-type database
+```
+
+The helper hides token input and passes it to the runtime over stdin. An agent may open this terminal for the user, but must not type, capture, print, or request the token in chat. If the target ID is not known, ask for the intended Notion page/database link or ID before launching the prompt.
+
+The runtime also accepts a partial configuration JSON on stdin. PowerShell example for a user who prefers to run the command manually:
 
 ```powershell
 $secret = Read-Host 'Notion token' -AsSecureString
@@ -28,13 +38,13 @@ $token = [System.Net.NetworkCredential]::new('', $secret).Password
 Remove-Variable token,secret
 ```
 
-On macOS, the following Node command prompts without echo and pipes JSON directly to the local CLI. The user runs it interactively, replacing the target ID:
+On macOS the same Node helper prompts without echo and pipes JSON directly to the local CLI. The user runs it interactively, replacing the target ID:
 
 ```sh
 node scripts/configure-notion.cjs --parent-id REPLACE_WITH_TARGET_ID --parent-type database
 ```
 
-The prompt helper also supports Windows. `parentType` accepts `database`, `data_source`, or `page`. Credentials are encrypted by the runtime's OS storage. `status` returns only `hasKey` flags. Run `notion check`; use `notion setup` when preparing/creating the destination is within the request.
+`parentType` accepts `database`, `data_source`, or `page`. Credentials are encrypted by the runtime's OS storage. `status` returns only `hasKey` flags. Run `notion check` after the prompt exits successfully; use `notion setup` when preparing/creating the destination is within the request. A configured Savault Notion desktop app is not evidence that this CLI profile is configured.
 
 ## Profiles and login
 
@@ -47,6 +57,8 @@ node scripts/savault.cjs collections list --platform xiaohongshu
 ```
 
 Wait for the user to complete QR login and any platform checks. Automatic confirmation hides the login window; `auth confirm --platform xiaohongshu` retries identity validation. Replace the platform with `bilibili` for Bilibili. Never export cookies from another browser/profile to avoid login.
+
+If the command reports that the login window opened but the user sees nothing, inspect `daemon status` before retrying. A stale `busy: true` state with no active sync job may require stopping and restarting only that CLI profile. Do not claim that a window was visible from the JSON response alone.
 
 ## Service configuration
 
