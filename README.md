@@ -1,6 +1,8 @@
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 # Savault Notion Skill
 
-让 AI 调用本机 Savault，把小红书和 B站收藏整理到 Notion。支持选择收藏夹、配置目标、启动同步、停止和查询任务。
+Let AI call the local Savault CLI to organize your Xiaohongshu and Bilibili collections in Notion. The Skill supports selecting collections, configuring destinations, starting and stopping syncs, and checking tasks.
 
 An Agent Skill for syncing your Xiaohongshu and Bilibili collections into Notion through the local Savault CLI.
 
@@ -10,35 +12,35 @@ An Agent Skill for syncing your Xiaohongshu and Bilibili collections into Notion
 npx skills add lin113311221/savault-skills --skill savault-notion
 ```
 
-也可以下载本仓库，将 `skills/savault-notion` 文件夹放入你使用的 Agent 的技能目录。Skill 使用标准 `SKILL.md` 格式；宿主需要能执行本地命令。
+You can also download this repository and place the `skills/savault-notion` folder in your Agent's skills directory. The Skill uses the standard `SKILL.md` format; the host must be able to execute local commands.
 
-## Install the runtime
+## Install the Runtime
 
-安装 Skill 后，告诉你的 Agent：
+After installing the Skill, tell your Agent:
 
-> 使用 savault-notion 技能，检查并安装 Savault CLI，引导我配置 Notion，然后列出我的小红书收藏夹。先不要同步。
+> Use the savault-notion Skill to check and install the Savault CLI, guide me through configuring Notion, and then list my Xiaohongshu collections. Do not sync yet.
 
-技能自带安装助手，会下载与你电脑匹配的 CLI 并校验 SHA256。你也可以手动下载：
+The Skill includes an installation helper that downloads the CLI matching your computer and verifies its SHA256. You can also download it manually:
 
-| 系统 | CLI 0.1.0 |
+| System | CLI 0.1.0 |
 |---|---|
-| Windows x64 | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-win-x64.zip) |
-| macOS 13+ Apple 芯片 | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-arm64.zip) |
-| macOS 13+ Intel | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-x64.zip) |
+| Windows x64 | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-win-x64.zip) |
+| macOS 13+ Apple silicon | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-arm64.zip) |
+| macOS 13+ Intel | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-x64.zip) |
 
-完整解压后将 `SAVAULT_CLI_DIR` 指向含 `savault.cmd`（Windows）或 `savault`（Mac）的目录。技能助手需要 Node.js 18+；手动运行 CLI 不需要另外安装 Node。
+Extract the entire archive, then point `SAVAULT_CLI_DIR` to the directory containing `savault.cmd` (Windows) or `savault` (Mac). The Skill helper requires Node.js 18+; running the CLI manually does not require a separate Node installation.
 
-首次平台登录需要你本人扫码。CLI 的配置和登录会话与 Savault Notion 桌面版分开保存。Mac 包采用 ad-hoc 签名，未做 Apple 公证；首次如被拦截，请在系统设置中核对并放行本次下载的应用。
+Your first platform login requires you to scan the QR code yourself. The CLI stores its configuration and login sessions separately from the Savault Notion desktop app. Mac packages use ad-hoc signing and are not notarized by Apple; if the first launch is blocked, check the downloaded app in System Settings and allow it to run.
 
-## Try it
+## Try It
 
-> 把我的小红书“科技”收藏夹同步到已配置的 Notion，先处理一条，完成后告诉我任务结果。
+> Sync my Xiaohongshu “Technology” collection to the configured Notion destination. Process one item first, then tell me the task result when it finishes.
 
-> 查看上次 Savault 同步是否完成，有哪些失败；不要重复启动任务。
+> Check whether my last Savault sync has finished and which items failed. Do not start the task again.
 
-> 停止当前 Savault 同步，然后查询最终状态。
+> Stop the current Savault sync, then check its final status.
 
-技能安装不会替你创建 Notion integration、接管浏览器登录或启用付费增强。密钥在本机安全输入，不能发到聊天中。只有本地 Windows/Mac 宿主可使用本套运行包；纯云端或 Linux Agent 暂不支持。
+Installing the Skill does not create a Notion integration for you, take over browser login, or enable paid enrichment. Enter keys securely on your own computer; do not send them in chat. These runtime packages support local Windows/Mac hosts only; cloud-only and Linux Agents are not currently supported.
 
 ## Documentation
 
@@ -48,3 +50,10 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 - [Savault product and support](https://product.aiprice.store/savault/)
 
 The Skill and helper scripts in this repository are MIT licensed. Savault runtime distributions and optional external services retain their respective terms; this repository's MIT license does not change those terms. Some runtime capabilities require a Savault license or a separately billed service/provider account. This is an independent Savault integration, not an official Notion, Xiaohongshu or Bilibili product.
+
+## Related Links
+
+- [Dream Bridge Lab](https://github.com/dreambridgelab)
+- [Savault Global](https://yourdreamlab.net/apps/savault/)
+
+The Global product page is a separate entry point. The local Savault CLI installation, supported platforms, licensing, and optional service terms are those documented above.
