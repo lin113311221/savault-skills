@@ -1,18 +1,25 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-# Savault Notion Skill
+# Savault Collection Sync Skill
 
-Let AI call the local Savault CLI to organize your Xiaohongshu and Bilibili collections in Notion. The Skill supports selecting collections, configuring destinations, starting and stopping syncs, and checking tasks.
+## Windows unified 0.1.6
 
-An Agent Skill for syncing your Xiaohongshu and Bilibili collections into Notion through the local Savault CLI.
+[Download package and checksums](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6) · [Local folder guide](docs/local-folder.md)
+
+One Windows package includes GUI and CLI, with local Markdown, Notion and Obsidian destinations. Local mode needs no note-taking app; grant your AI tool folder access after syncing. GUI and CLI profiles remain separate. Mac retains its earlier packages.
+
+
+Let AI call the local Savault CLI to organize your Xiaohongshu and Bilibili collections in a local Markdown folder, Notion or Obsidian on Windows. The Skill supports selecting collections, configuring destinations, starting and stopping syncs, and checking tasks.
+
+The installed Skill name remains savault-notion for compatibility.
 
 ## Use your saved knowledge with AI
 
 Sync is the first step. After granting a compatible AI tool access to the resulting Notion pages or local notes, you can ask Codex, WorkBuddy, or another Agent to apply your saved methods with source references.
 
-**This Skill manages Notion sync jobs; it does not expose a Savault Q&A MCP or `ask`/`search` API.** Read synced Notion content through a separate authorized connector such as official Notion MCP. Savault's built-in Ask Your Collections is currently an Obsidian plugin feature.
+**This Skill manages collection sync jobs; it does not expose a Savault Q&A MCP or `ask`/`search` API.** Read synced Notion content through a separate authorized connector such as official Notion MCP. Savault's built-in Ask Your Collections is currently an Obsidian plugin feature.
 
-Read the [AI knowledge workflow and connection guide](docs/ai-knowledge-workflow.md), or start from the compact [Agent documentation index](llms.txt). Notes do not automatically become installed Skills or train the model. Current GUI capabilities should not be assumed to exist in the pinned CLI 0.1.0 runtime below.
+Read the [AI knowledge workflow and connection guide](docs/ai-knowledge-workflow.md), or start from the compact [Agent documentation index](llms.txt). Notes do not automatically become installed Skills or train the model. Windows is pinned to unified 0.1.6; Mac remains on CLI 0.1.0. Check the installed schema before using destination-specific commands.
 
 ## Install the Skill
 
@@ -26,13 +33,13 @@ You can also download this repository and place the `skills/savault-notion` fold
 
 After installing the Skill, tell your Agent:
 
-> Use the savault-notion Skill to check and install the Savault CLI, guide me through configuring Notion, and then list my Xiaohongshu collections. Do not sync yet.
+> Use the savault-notion Skill to check and install the Savault CLI, on Windows help me choose a local folder or Notion, and then list my Xiaohongshu collections. Do not sync yet.
 
 The Skill includes an installation helper that downloads the CLI matching your computer and verifies its SHA256. You can also download it manually:
 
-| System | CLI 0.1.0 |
+| System | Runtime |
 |---|---|
-| Windows x64 | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-win-x64.zip) |
+| Windows x64 | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-win32-x64.zip) |
 | macOS 13+ Apple silicon | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-arm64.zip) |
 | macOS 13+ Intel | [Download ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-x64.zip) |
 

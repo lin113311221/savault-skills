@@ -5,7 +5,7 @@ function run(executable, args) { return execFileSync(executable, args, { stdio: 
 let staging, installRoot;
 try {
   const { values } = parseArgs({ options: { archive: { type: 'string' }, dir: { type: 'string' }, help: { type: 'boolean' } }, strict: true });
-  if (values.help) { console.log(JSON.stringify({ options: { '--dir PATH': 'Version installation base directory', '--archive FILE': 'Use a local archive, still verify pinned SHA256' }, version: manifest.version })); process.exit(0); }
+  if (values.help) { console.log(JSON.stringify({ options: { '--dir PATH': 'Version installation base directory', '--archive FILE': 'Use a local archive, still verify pinned SHA256' }, version: platform().version || manifest.version })); process.exit(0); }
   const selected = platform(), root = path.resolve(values.dir || base()), destination = path.join(root, selected.directory);
   installRoot = root;
   if (fs.existsSync(destination)) throw Error('Destination already exists; use the existing runtime or choose another --dir. No files were replaced.');
@@ -27,7 +27,7 @@ try {
   const source = path.join(extracted, selected.directory), execPath = entry(source).executable;
   if (!fs.existsSync(execPath)) throw Error('Archive does not contain the expected CLI runtime');
   fs.renameSync(source, destination);
-  console.log(JSON.stringify({ ok: true, version: manifest.version, directory: destination, sha256: hash, next: values.dir ? 'Set SAVAULT_CLI_DIR to directory, then run scripts/savault.cjs doctor' : 'Run scripts/savault.cjs doctor' }));
+  console.log(JSON.stringify({ ok: true, version: platform().version || manifest.version, directory: destination, sha256: hash, next: values.dir ? 'Set SAVAULT_CLI_DIR to directory, then run scripts/savault.cjs doctor' : 'Run scripts/savault.cjs doctor' }));
 } catch (error) { console.log(JSON.stringify({ ok: false, error: { code: 'INSTALL_FAILED', message: error.status !== undefined ? 'Download, extraction or signature verification failed; inspect network/system permissions and retry in a new directory' : error.message } })); process.exitCode = 1; }
 finally {
   // Only this invocation's staging is removed; an external --archive is retained.

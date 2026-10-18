@@ -1,12 +1,16 @@
 # Savault documentation index
 
-> Saved collections to Notion or Obsidian; authorized AI use through separate read connectors or local Markdown. This file is an index, not an MCP endpoint.
+> Saved collections to local Markdown, Notion or Obsidian; authorized AI use through separate read connectors or local Markdown. This file is an index, not an MCP endpoint.
 
 - [English README](https://github.com/lin113311221/savault-skills/blob/main/README.md)
 - [Chinese README](https://github.com/lin113311221/savault-skills/blob/main/README.zh-CN.md)
 - [AI knowledge workflow and interface boundaries](https://github.com/lin113311221/savault-skills/blob/main/docs/ai-knowledge-workflow.md)
-- [Notion sync Skill](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/SKILL.md)
+- [Collection sync Skill](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/SKILL.md)
 - [Pinned runtime and SHA256](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/references/runtime.json)
 - [Current product and downloads](https://product.aiprice.store/savault/)
 
-The public Skill supports sync/task management, not Savault Q&A MCP. Built-in Ask Your Collections is an Obsidian feature. Current GUI terms and older pinned runtime capabilities may differ.
+The public Skill supports sync/task management, not Savault Q&A MCP. Built-in Ask Your Collections is an Obsidian feature. Windows is pinned to unified 0.1.6; Mac retains CLI 0.1.0.
+
+Windows unified 0.1.6: https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6
+Local folder guide: https://github.com/lin113311221/savault-skills/blob/main/docs/local-folder.md
+Windows GUI+CLI supports local Markdown / Notion / Obsidian. Mac remains on older packages. No Savault Q&A MCP.

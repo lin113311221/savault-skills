@@ -9,11 +9,15 @@ node scripts/install.cjs
 node scripts/savault.cjs doctor
 ```
 
-The installer downloads the matching version from the public [Savault release](https://github.com/lin113311221/savault-skills/releases/tag/cli-v0.1.0), checks the SHA256 in `runtime.json`, and extracts into `%LOCALAPPDATA%/SavaultCLI/0.1.0` on Windows or `~/Applications/SavaultCLI/0.1.0` on Mac. It refuses to replace an existing destination. No PATH, system proxy, browser configuration or GUI data is changed. Download requires access to GitHub release assets; an interrupted or failed install is not a ready runtime.
+The installer downloads Windows unified 0.1.6 from the [Savault release](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6), or the existing Mac CLI 0.1.0, checks the SHA256 in `runtime.json`, and extracts into `%LOCALAPPDATA%/SavaultCLI/0.1.6` on Windows or `~/Applications/SavaultCLI/0.1.0` on Mac. It refuses to replace an existing destination. No PATH, system proxy, browser configuration or GUI data is changed. Download requires access to GitHub release assets; an interrupted or failed install is not a ready runtime.
 
 For an existing manually downloaded package, set `SAVAULT_CLI_DIR` to the directory containing `savault.cmd` (Windows) or `savault` (Mac). `install.cjs --archive FILE --dir DIRECTORY` installs a previously downloaded pinned archive into a chosen directory; use the returned directory as `SAVAULT_CLI_DIR` afterward.
 
 Mac runtime uses ad-hoc signing and is not Apple-notarized. If Gatekeeper blocks the download, let the user review and allow this app through System Settings → Privacy & Security. Do not disable Gatekeeper or remove quarantine automatically. A first Keychain prompt also belongs to the user.
+
+## Local Markdown on Windows 0.1.6
+
+Use `local setup --folder ABSOLUTE_PATH` and `local check`. Then complete platform login, list collections and sync the user-selected scope. No Notion account is required. To read results with AI, grant the AI host access to the chosen folder. See [SKILL.md](../SKILL.md) for destination selection and the profile boundary.
 
 ## Configure Notion securely
 
@@ -37,8 +41,6 @@ $token = [System.Net.NetworkCredential]::new('', $secret).Password
 @{ notion = @{ token = $token; parentId = 'REPLACE_WITH_TARGET_ID'; parentType = 'database' } } | ConvertTo-Json -Compress | node scripts/savault.cjs config set --stdin
 Remove-Variable token,secret
 ```
-
-If the user has explicitly authorized reuse of a credential already stored by another local CLI, pipe it directly from that local secret store into `config set --stdin`. Do not print it, place it in a command argument, save an intermediate plaintext file, or claim that an encrypted desktop profile can be copied as plaintext. Verify only with the redacted `status` and `notion check` outputs.
 
 On macOS the same Node helper prompts without echo and pipes JSON directly to the local CLI. The user runs it interactively, replacing the target ID:
 
@@ -67,5 +69,9 @@ If the command reports that the login window opened but the user sees nothing, i
 `config set --stdin` accepts `notion`, `licenseKey`, and `asr`/`vision`/`ai` objects. Content enhancement requires the existing product authorization. For each enhancement, `source` is `gift` (Savault service balance) or `own` (user's provider), and fields include `enabled`, `provider`, `baseUrl`, `model`, `apiKey`. Use `status` for available presets and `schema` for commands. Keep credentials local and pass values through stdin. Activation and service-card redemption accept a plain string on stdin, not a JSON string.
 
 Free usage limits, licensed capabilities and paid provider costs are separate from installation of this free Skill. Do not redeem cards or invoke paid enhancement just to test connectivity.
+
+
+If the user has explicitly authorized reuse of a credential already stored by another local CLI, pipe it directly from that local secret store into `config set --stdin`. Do not print it, place it in a command argument, save an intermediate plaintext file, or claim that an encrypted desktop profile can be copied as plaintext. Verify only with the redacted `status` and `notion check` outputs.
+
 
 After redemption, `balance` reports the account's remaining ASR/AI/cost allowance. It does not report the hosted service's global spend cap or upstream provider balance. When a real canary logs `PRICE_REVIEW_REQUIRED` or `SERVICE_BUDGET_EXHAUSTED`, do not issue another card as a repair. Preserve the job ID, inspect its progress, and route maintainers to [backend-diagnostics.md](backend-diagnostics.md).

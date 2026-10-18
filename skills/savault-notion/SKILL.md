@@ -1,24 +1,25 @@
 ---
 name: savault-notion
-description: Sync the user's Xiaohongshu or Bilibili collections into Notion with Savault CLI. Use for importing saved posts/videos, listing collection folders, preparing a Notion target, and starting, stopping or checking Savault sync jobs. 支持小红书/B站收藏同步到 Notion、收藏夹查询和同步任务管理。
+description: Sync selected Xiaohongshu or Bilibili collections with Savault. Windows 0.1.6 supports local Markdown folders, Notion and Obsidian with one GUI/CLI package; Mac retains CLI 0.1.0. Use for installation, choosing a destination, collection listing and sync task management. 支持小红书/B站收藏同步到本地文件夹、Notion 或 Obsidian，并供 AI 读取笔记。
 license: MIT
 metadata:
   author: Dreambridge Creation
-  version: "0.1.0"
+  version: "0.1.6"
 ---
 
-# Savault Notion
+# Savault collection sync
 
-Use the separately installed Savault CLI to import the user's own saved content into Notion. The runtime supports Windows x64 and macOS 13+ (Apple Silicon / Intel), requires a local graphical desktop for initial platform login, and keeps its configuration separate from the Savault Notion GUI. A cloud-only agent cannot use the user's local login session through this skill.
+Use the locally installed Savault runtime to import the user's own saved content. Windows 0.1.6 saves to a local Markdown folder, Notion, or an Obsidian Vault; its GUI and CLI share one package. Mac stays on the earlier CLI 0.1.0 and does not gain this unified feature set. The runtime supports Windows x64 and macOS 13+ (Apple Silicon / Intel), requires a local graphical desktop for initial platform login, and keeps its configuration separate from the Savault Notion GUI. A cloud-only agent cannot use the user's local login session through this skill.
 
 ## Choose the correct Savault surface
 
-This skill controls **Savault CLI profiles**, not the Savault Notion desktop application's profile. Treat them as two separate products even when both are installed:
+This skill controls **Savault CLI profiles**, not the Savault Notion desktop application's profile. Their profiles remain separate even when Windows GUI and CLI share one package:
 
 - CLI configuration and sessions live under `SavaultCLI`; desktop configuration and sessions live under `SavaultNotion`.
 - A working desktop Notion connection does not make `node scripts/savault.cjs notion check` pass, and a confirmed CLI platform login does not log the desktop app in.
 - Do not conclude that the user's Notion account is unconfigured merely because the CLI profile has no token. State which surface was checked.
 - Stay on the CLI path for requests made through this skill. If the user explicitly wants to reuse the desktop app, use only a documented desktop automation entrypoint that exists on that machine; otherwise explain the profile boundary instead of trying to copy encrypted settings or cookies.
+
 - Do not fall back to the desktop GUI merely because the CLI profile lacks credentials. The CLI supports Notion configuration through `config set --stdin`, product authorization through `license activate --stdin`, and service-card redemption through `license redeem --stdin`. Use those commands or the bundled hidden-input helper.
 
 ## Locate the runtime
@@ -31,7 +32,20 @@ node "$SKILL_DIR/scripts/savault.cjs" doctor
 node "$SKILL_DIR/scripts/savault.cjs" status
 ```
 
-In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$SKILL_DIR` to the actual skill directory. If the user already has a CLI package, set `SAVAULT_CLI_DIR` to its extracted directory (the directory containing `savault.cmd` or `savault`). Do not point it at the GUI application. If missing, read [setup.md](references/setup.md) and install the pinned runtime using `scripts/install.cjs` within the user's installation request. The helper verifies the release SHA256 before extracting and never changes global PATH.
+In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$SKILL_DIR` to the actual skill directory. If the user already has a CLI package, set `SAVAULT_CLI_DIR` to its extracted directory (the directory containing `savault.cmd` or `savault`). Windows 0.1.6 may point to the unified Savault directory containing Savault.exe and savault.cmd; older Notion-only GUI packages do not provide this CLI. If missing, read [setup.md](references/setup.md) and install the pinned runtime using `scripts/install.cjs` within the user's installation request. The helper verifies the release SHA256 before extracting and never changes global PATH.
+
+## Choose a destination
+
+Reuse a destination the user already selected. On Windows 0.1.6, local Markdown is the default for a new profile and requires no Notion or Obsidian account:
+
+```sh
+node "$SKILL_DIR/scripts/savault.cjs" local setup --folder "ABSOLUTE_FOLDER_PATH"
+node "$SKILL_DIR/scripts/savault.cjs" local check
+```
+
+Use the actual OS path, not this placeholder. The setup creates the chosen folder and selects the local target. Notes are placed under savault/platform/collection with relative cover-image links. Do not write through symlinks/Junctions. To use Notion, configure target=notion and run notion check; to use Obsidian, configure target=obsidian and obsidian.vaultPath then run obsidian check. Keep credentials on stdin. Inspect schema for the installed runtime; Mac 0.1.0 lacks local setup/check.
+
+After syncing, grant the AI host access to the selected local folder, or use a separate authorized Notion connector. This Skill does not provide Q&A MCP, train a model, or automatically turn content into installed Skills.
 
 ## Connect accounts
 
@@ -71,7 +85,7 @@ Report created/updated/skipped/failed counts and relevant errors. A `partial` jo
 
 Do not treat `status: completed` or `failed: 0` as proof that requested enhancements succeeded. Savault deliberately writes the base note when an optional enhancement fails, so a job can complete after logging ASR, vision, or summary failures. Inspect job progress/logs for enhancement errors and read back a representative Notion page when the user requires transcripts, image interpretation, or AI summaries. Stop before a full-folder run if the canary page lacks the requested sections.
 
-For a full-folder acceptance, query the destination by collection and aggregate every returned page: require an AI summary plus either a transcript or image interpretation according to the available media. Use an explicit supported Notion API version if the CLI's OpenAPI-version discovery returns 403. Report the platform badge count separately from the live API result count; removed or private favorites may make them differ.
+For a full-folder acceptance, inspect every local Markdown file and resolve its image links, or query the Notion destination by collection and aggregate every returned page: require an AI summary plus either a transcript or image interpretation according to the available media. Use an explicit supported Notion API version if the CLI's OpenAPI-version discovery returns 403. Report the platform badge count separately from the live API result count; removed or private favorites may make them differ.
 
 Use `jobs get`, `logs --job ID --tail 30`, and `doctor` for bounded diagnostics. `daemon stop` refuses a running operation. Exit codes: 0 success, 1 operation/job failure, 2 invalid input, 130 cancelled wait. Consult `schema` for the exact CLI command set.
 
@@ -89,4 +103,4 @@ Do not ask the user to resend a full card number when `status` already reports `
 
 The skill is free; runtime/service terms and external provider costs are separate.
 
-Product and support: <https://product.aiprice.store/savault/>. Runtime downloads: <https://github.com/lin113311221/savault-skills/releases/tag/cli-v0.1.0>.
+Product and support: <https://product.aiprice.store/savault/>. Windows unified runtime: <https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6>. Mac CLI 0.1.0 remains in the earlier release linked by runtime.json.

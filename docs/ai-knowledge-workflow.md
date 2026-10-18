@@ -1,6 +1,6 @@
 # Let your AI use your saved knowledge / 让 AI 用上你的收藏
 
-Savault turns selected Xiaohongshu and Bilibili collections into Notion pages or local Obsidian notes. After you authorize a compatible AI tool to read those notes, it can use your chosen methods and sources in a task. This does not train the model or automatically install the saved content as Agent Skills.
+Savault turns selected Xiaohongshu and Bilibili collections into local Markdown files, Notion pages, or Obsidian notes. After you authorize a compatible AI tool to read those notes, it can use your chosen methods and sources in a task. This does not train the model or automatically install the saved content as Agent Skills.
 
 Savault 把选定收藏整理成笔记。你再授权 Codex、WorkBuddy 等工具读取这些笔记，让它们在写作、学习或工作任务中参考你选过的方法，并标出来源。
 
@@ -8,7 +8,7 @@ Savault 把选定收藏整理成笔记。你再授权 Codex、WorkBuddy 等工�
 
 | Goal / 目标 | Interface / 入口 |
 |---|---|
-| Ask an Agent to sync collections into Notion / 让 Agent 执行同步 | [Savault Notion Skill](https://github.com/lin113311221/savault-skills), using a separately installed local CLI |
+| Ask an Agent to sync collections into Notion / 让 Agent 执行同步 | [Savault Notion Skill](https://github.com/lin113311221/savault-skills), using a local CLI (bundled with Windows GUI in 0.1.6) |
 | Read and ask questions about synced Notion pages / 读取并问答 Notion 笔记 | An authorized Notion connector, such as the [official Notion MCP](https://developers.notion.com/guides/mcp/overview) |
 | Use local Obsidian Markdown in a task / 使用本地笔记 | Give the AI host access to the selected notes folder, or attach selected Markdown files |
 | Use Savault's built-in Ask Your Collections / 使用内置“问收藏” | Savault Obsidian plugin, with an active AI entitlement and configured service |
@@ -32,9 +32,9 @@ Example / 可以这样说：
 
 > 请只参考我指定的收藏库。先找到刚同步的那篇写作笔记，给出标题和来源，确认你能读取；再按其中适用的方法起草一篇产品介绍，逐条注明参考来源。读不到就说明缺口，不要编造。
 
-## Route B: Obsidian + Codex or WorkBuddy
+## Route B: Local Markdown or Obsidian + Codex or WorkBuddy
 
-1. Sync one selected item into your Obsidian vault and inspect the Markdown note.
+1. On Windows 0.1.6 select a local folder or Obsidian Vault, sync one selected item, and inspect the Markdown note. See [local-folder.md](local-folder.md).
 2. Grant the AI host access only to the intended notes folder, or attach that note as a file. You do not need a Savault-specific MCP to read ordinary Markdown.
 3. Ask it to read the note and report the title/source before using it in a task. If you want a reusable Skill, separately ask the AI to extract the method, review its boundaries, and save it in the host's supported Skill format.
 
