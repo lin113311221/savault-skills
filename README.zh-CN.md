@@ -2,16 +2,16 @@
 
 # Savault Collection Sync Skill
 
-## Windows 统一版 0.1.6
+## Windows / Mac 统一版 0.1.6
 
 [下载统一包与校验文件](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6) · [本地文件夹使用说明](docs/local-folder.md)
 
-一个 Windows 包包含 GUI 和 CLI，可保存到本地 Markdown 文件夹、Notion 或 Obsidian。无需安装笔记软件也可同步到本地，再授权 AI 读取；GUI 与 CLI 登录和配置分别保存。Mac 沿用原版预览包。
+Windows 和 Mac 的每个下载包均包含 GUI 和 CLI，可保存到本地 Markdown 文件夹、Notion 或 Obsidian。无需安装笔记软件也可同步到本地，再授权 AI 读取；GUI 与 CLI 登录和配置分别保存。Mac 支持 macOS 13 及以上的 Apple 芯片和 Intel 机型。
 
 
-让 AI 调用本机 Savault；Windows 可把小红书和 B站收藏整理到本地文件夹、Notion 或 Obsidian。支持选择收藏夹、配置目标、启动同步、停止和查询任务。
+让 AI 调用本机 Savault；Windows 和 Mac 可把小红书和 B站收藏整理到本地文件夹、Notion 或 Obsidian。支持选择收藏夹、配置目标、启动同步、停止和查询任务。
 
-安装名 savault-notion 保持兼容，功能范围已包含 Windows 本地文件夹。
+安装名 savault-notion 保持兼容，功能范围已包含 Windows/Mac 本地文件夹。
 
 ## 让 AI 用上你收藏的好方法
 
@@ -19,7 +19,7 @@
 
 **本 Skill 负责收藏同步和任务管理，不提供 Savault 问答 MCP 或 `ask`/`search` API。** 读取 Notion 内容需另接已授权的读取工具，例如官方 Notion MCP；Savault 内置“问收藏”目前属于 Obsidian 插件功能。
 
-见[AI 知识使用与连接指南](docs/ai-knowledge-workflow.md)及[Agent 文档索引](llms.txt)。收藏不会自动训练模型，也不会自动变成已安装的 Skill。Windows 固定运行包为统一版 0.1.6；Mac 保留 CLI 0.1.0，请按安装版本的 schema 使用命令。
+见[AI 知识使用与连接指南](docs/ai-knowledge-workflow.md)及[Agent 文档索引](llms.txt)。收藏不会自动训练模型，也不会自动变成已安装的 Skill。Windows 和 Mac 固定运行包均为统一版 0.1.6，请按安装版本的 schema 使用命令。
 
 ## 安装 Skill
 
@@ -33,15 +33,15 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 
 安装 Skill 后，告诉你的 Agent：
 
-> 使用 savault-notion 技能，检查并安装 Savault CLI，在 Windows 上引导我选择本地文件夹或 Notion，再列出我的小红书收藏夹。先不要同步。
+> 使用 savault-notion 技能，检查并安装 Savault CLI，引导我选择本地文件夹或 Notion，再列出我的小红书收藏夹。先不要同步。
 
 技能自带安装助手，会下载与你电脑匹配的 CLI 并校验 SHA256。你也可以手动下载：
 
 | 系统 | 运行包 |
 |---|---|
 | Windows x64 | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-win32-x64.zip) |
-| macOS 13+ Apple 芯片 | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-arm64.zip) |
-| macOS 13+ Intel | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-x64.zip) |
+| macOS 13+ Apple 芯片 | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-mac-arm64.zip) |
+| macOS 13+ Intel | [下载 ZIP](https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-mac-x64.zip) |
 
 完整解压后将 `SAVAULT_CLI_DIR` 指向含 `savault.cmd`（Windows）或 `savault`（Mac）的目录。技能助手需要 Node.js 18+；手动运行 CLI 不需要另外安装 Node。
 

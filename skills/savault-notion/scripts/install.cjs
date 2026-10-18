@@ -22,7 +22,7 @@ try {
     run('powershell.exe', ['-NoProfile', '-NonInteractive', '-File', script, archive, extracted]);
   } else {
     run('/usr/bin/ditto', ['-x', '-k', archive, extracted]);
-    run('/usr/bin/codesign', ['--verify', '--deep', '--strict', path.join(extracted, selected.directory, 'Savault CLI.app')]);
+    run('/usr/bin/codesign', ['--verify', '--deep', '--strict', entry(path.join(extracted, selected.directory)).bundle]);
   }
   const source = path.join(extracted, selected.directory), execPath = entry(source).executable;
   if (!fs.existsSync(execPath)) throw Error('Archive does not contain the expected CLI runtime');

@@ -9,18 +9,18 @@
       "sha256": "3df1c14ca8f79337f870dceb1e996476908dd1433ed55a90e85ab2b2ea20c357"
     },
     "darwin-arm64": {
-      "file": "Savault-CLI-0.1.0-20260909-mac-arm64.zip",
-      "directory": "Savault CLI-darwin-arm64",
-      "url": "https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-arm64.zip",
-      "sha256": "ac61850956fa24ea3297e895e31d2c7f39defeeffab133e3e1ebcf94f962e918",
-      "version": "0.1.0"
+      "version": "0.1.6",
+      "file": "Savault-0.1.6-mac-arm64.zip",
+      "directory": "Savault-darwin-arm64",
+      "url": "https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-mac-arm64.zip",
+      "sha256": "f2f39134cfec207f41975ab8369739d9497df76e1d6ef79e42c8ee062b179c86"
     },
     "darwin-x64": {
-      "file": "Savault-CLI-0.1.0-20260909-mac-x64.zip",
-      "directory": "Savault CLI-darwin-x64",
-      "url": "https://github.com/lin113311221/savault-skills/releases/download/cli-v0.1.0/Savault-CLI-0.1.0-20260909-mac-x64.zip",
-      "sha256": "b8127cf7f9625c7b25d44d139c42e64746b93a6f979eafbcd3a6c4893bb16704",
-      "version": "0.1.0"
+      "version": "0.1.6",
+      "file": "Savault-0.1.6-mac-x64.zip",
+      "directory": "Savault-darwin-x64",
+      "url": "https://github.com/lin113311221/savault-skills/releases/download/desktop-v0.1.6/Savault-0.1.6-mac-x64.zip",
+      "sha256": "44e773a3cc3f37c34be8c8a46e936f279b3ad358d1e0acb73e5dc21d78e7d49d"
     }
   }
 }

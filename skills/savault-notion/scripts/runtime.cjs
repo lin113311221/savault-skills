@@ -11,6 +11,8 @@ function base() { return path.join(process.platform === 'win32' ? process.env.LO
 function directory() { return path.resolve(process.env.SAVAULT_CLI_DIR || path.join(base(), platform().directory)); }
 function entry(dir = directory()) {
   if (process.platform === 'win32') return { executable: path.join(dir, fs.existsSync(path.join(dir, 'Savault.exe')) ? 'Savault.exe' : 'Savault CLI.exe'), launcher: path.join(dir, 'resources/app.asar/launcher.cjs') };
-  return { executable: path.join(dir, 'Savault CLI.app/Contents/MacOS/Savault CLI'), launcher: path.join(dir, 'Savault CLI.app/Contents/Resources/app.asar/launcher.cjs') };
+  const name = fs.existsSync(path.join(dir, 'Savault.app')) ? 'Savault' : 'Savault CLI';
+  const bundle = path.join(dir, name + '.app');
+  return { executable: path.join(bundle, 'Contents/MacOS', name), launcher: path.join(bundle, 'Contents/Resources/app.asar/launcher.cjs'), bundle };
 }
 module.exports = { manifest, platform, base, directory, entry };

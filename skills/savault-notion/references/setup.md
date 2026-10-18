@@ -9,13 +9,13 @@ node scripts/install.cjs
 node scripts/savault.cjs doctor
 ```
 
-The installer downloads Windows unified 0.1.6 from the [Savault release](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6), or the existing Mac CLI 0.1.0, checks the SHA256 in `runtime.json`, and extracts into `%LOCALAPPDATA%/SavaultCLI/0.1.6` on Windows or `~/Applications/SavaultCLI/0.1.0` on Mac. It refuses to replace an existing destination. No PATH, system proxy, browser configuration or GUI data is changed. Download requires access to GitHub release assets; an interrupted or failed install is not a ready runtime.
+The installer downloads unified 0.1.6 for Windows or Mac from the [Savault release](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6), checks the SHA256 in `runtime.json`, and extracts into `%LOCALAPPDATA%/SavaultCLI/0.1.6` on Windows or `~/Applications/SavaultCLI/0.1.6` on Mac. It refuses to replace an existing destination. No PATH, system proxy, browser configuration or GUI data is changed. Download requires access to GitHub release assets; an interrupted or failed install is not a ready runtime.
 
 For an existing manually downloaded package, set `SAVAULT_CLI_DIR` to the directory containing `savault.cmd` (Windows) or `savault` (Mac). `install.cjs --archive FILE --dir DIRECTORY` installs a previously downloaded pinned archive into a chosen directory; use the returned directory as `SAVAULT_CLI_DIR` afterward.
 
 Mac runtime uses ad-hoc signing and is not Apple-notarized. If Gatekeeper blocks the download, let the user review and allow this app through System Settings → Privacy & Security. Do not disable Gatekeeper or remove quarantine automatically. A first Keychain prompt also belongs to the user.
 
-## Local Markdown on Windows 0.1.6
+## Local Markdown on Windows / Mac 0.1.6
 
 Use `local setup --folder ABSOLUTE_PATH` and `local check`. Then complete platform login, list collections and sync the user-selected scope. No Notion account is required. To read results with AI, grant the AI host access to the chosen folder. See [SKILL.md](../SKILL.md) for destination selection and the profile boundary.
 

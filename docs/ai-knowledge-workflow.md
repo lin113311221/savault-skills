@@ -8,7 +8,7 @@ Savault 把选定收藏整理成笔记。你再授权 Codex、WorkBuddy 等工�
 
 | Goal / 目标 | Interface / 入口 |
 |---|---|
-| Ask an Agent to sync collections into Notion / 让 Agent 执行同步 | [Savault Notion Skill](https://github.com/lin113311221/savault-skills), using a local CLI (bundled with Windows GUI in 0.1.6) |
+| Ask an Agent to sync collections into Notion / 让 Agent 执行同步 | [Savault Notion Skill](https://github.com/lin113311221/savault-skills), using a local CLI (bundled with Windows and Mac GUI in 0.1.6) |
 | Read and ask questions about synced Notion pages / 读取并问答 Notion 笔记 | An authorized Notion connector, such as the [official Notion MCP](https://developers.notion.com/guides/mcp/overview) |
 | Use local Obsidian Markdown in a task / 使用本地笔记 | Give the AI host access to the selected notes folder, or attach selected Markdown files |
 | Use Savault's built-in Ask Your Collections / 使用内置“问收藏” | Savault Obsidian plugin, with an active AI entitlement and configured service |
@@ -34,7 +34,7 @@ Example / 可以这样说：
 
 ## Route B: Local Markdown or Obsidian + Codex or WorkBuddy
 
-1. On Windows 0.1.6 select a local folder or Obsidian Vault, sync one selected item, and inspect the Markdown note. See [local-folder.md](local-folder.md).
+1. On Windows or Mac 0.1.6 select a local folder or Obsidian Vault, sync one selected item, and inspect the Markdown note. See [local-folder.md](local-folder.md).
 2. Grant the AI host access only to the intended notes folder, or attach that note as a file. You do not need a Savault-specific MCP to read ordinary Markdown.
 3. Ask it to read the note and report the title/source before using it in a task. If you want a reusable Skill, separately ask the AI to extract the method, review its boundaries, and save it in the host's supported Skill format.
 

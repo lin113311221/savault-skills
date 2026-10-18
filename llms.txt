@@ -9,8 +9,8 @@
 - [Pinned runtime and SHA256](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/references/runtime.json)
 - [Current product and downloads](https://product.aiprice.store/savault/)
 
-The public Skill supports sync/task management, not Savault Q&A MCP. Built-in Ask Your Collections is an Obsidian feature. Windows is pinned to unified 0.1.6; Mac retains CLI 0.1.0.
+The public Skill supports sync/task management, not Savault Q&A MCP. Built-in Ask Your Collections is an Obsidian feature. Windows and Mac are pinned to unified 0.1.6.
 
-Windows unified 0.1.6: https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6
+Windows / Mac unified 0.1.6: https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6
 Local folder guide: https://github.com/lin113311221/savault-skills/blob/main/docs/local-folder.md
-Windows GUI+CLI supports local Markdown / Notion / Obsidian. Mac remains on older packages. No Savault Q&A MCP.
+Windows and Mac GUI+CLI support local Markdown / Notion / Obsidian. No Savault Q&A MCP.

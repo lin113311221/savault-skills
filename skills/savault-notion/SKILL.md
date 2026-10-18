@@ -1,6 +1,6 @@
 ---
 name: savault-notion
-description: Sync selected Xiaohongshu or Bilibili collections with Savault. Windows 0.1.6 supports local Markdown folders, Notion and Obsidian with one GUI/CLI package; Mac retains CLI 0.1.0. Use for installation, choosing a destination, collection listing and sync task management. 支持小红书/B站收藏同步到本地文件夹、Notion 或 Obsidian，并供 AI 读取笔记。
+description: Sync selected Xiaohongshu or Bilibili collections with Savault. Windows and Mac 0.1.6 support local Markdown folders, Notion and Obsidian with one GUI/CLI package. Use for installation, choosing a destination, collection listing and sync task management. 支持小红书/B站收藏同步到本地文件夹、Notion 或 Obsidian，并供 AI 读取笔记。
 license: MIT
 metadata:
   author: Dreambridge Creation
@@ -9,11 +9,11 @@ metadata:
 
 # Savault collection sync
 
-Use the locally installed Savault runtime to import the user's own saved content. Windows 0.1.6 saves to a local Markdown folder, Notion, or an Obsidian Vault; its GUI and CLI share one package. Mac stays on the earlier CLI 0.1.0 and does not gain this unified feature set. The runtime supports Windows x64 and macOS 13+ (Apple Silicon / Intel), requires a local graphical desktop for initial platform login, and keeps its configuration separate from the Savault Notion GUI. A cloud-only agent cannot use the user's local login session through this skill.
+Use the locally installed Savault runtime to import the user's own saved content. Windows and Mac 0.1.6 save to a local Markdown folder, Notion, or an Obsidian Vault; its GUI and CLI share one package. The runtime supports Windows x64 and macOS 13+ (Apple Silicon / Intel), requires a local graphical desktop for initial platform login, and keeps its configuration separate from the Savault Notion GUI. A cloud-only agent cannot use the user's local login session through this skill.
 
 ## Choose the correct Savault surface
 
-This skill controls **Savault CLI profiles**, not the Savault Notion desktop application's profile. Their profiles remain separate even when Windows GUI and CLI share one package:
+This skill controls **Savault CLI profiles**, not the Savault Notion desktop application's profile. Their profiles remain separate even when GUI and CLI share one package:
 
 - CLI configuration and sessions live under `SavaultCLI`; desktop configuration and sessions live under `SavaultNotion`.
 - A working desktop Notion connection does not make `node scripts/savault.cjs notion check` pass, and a confirmed CLI platform login does not log the desktop app in.
@@ -32,18 +32,18 @@ node "$SKILL_DIR/scripts/savault.cjs" doctor
 node "$SKILL_DIR/scripts/savault.cjs" status
 ```
 
-In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$SKILL_DIR` to the actual skill directory. If the user already has a CLI package, set `SAVAULT_CLI_DIR` to its extracted directory (the directory containing `savault.cmd` or `savault`). Windows 0.1.6 may point to the unified Savault directory containing Savault.exe and savault.cmd; older Notion-only GUI packages do not provide this CLI. If missing, read [setup.md](references/setup.md) and install the pinned runtime using `scripts/install.cjs` within the user's installation request. The helper verifies the release SHA256 before extracting and never changes global PATH.
+In PowerShell use `node "$SKILL_DIR/scripts/savault.cjs" ...` after assigning `$SKILL_DIR` to the actual skill directory. If the user already has a CLI package, set `SAVAULT_CLI_DIR` to its extracted directory (the directory containing `savault.cmd` or `savault`). Unified 0.1.6 points to the directory containing Savault.exe and savault.cmd (Windows), or Savault.app and savault (Mac); older Notion-only GUI packages do not provide this CLI. If missing, read [setup.md](references/setup.md) and install the pinned runtime using `scripts/install.cjs` within the user's installation request. The helper verifies the release SHA256 before extracting and never changes global PATH.
 
 ## Choose a destination
 
-Reuse a destination the user already selected. On Windows 0.1.6, local Markdown is the default for a new profile and requires no Notion or Obsidian account:
+Reuse a destination the user already selected. On Windows and Mac 0.1.6, local Markdown is the default for a new profile and requires no Notion or Obsidian account:
 
 ```sh
 node "$SKILL_DIR/scripts/savault.cjs" local setup --folder "ABSOLUTE_FOLDER_PATH"
 node "$SKILL_DIR/scripts/savault.cjs" local check
 ```
 
-Use the actual OS path, not this placeholder. The setup creates the chosen folder and selects the local target. Notes are placed under savault/platform/collection with relative cover-image links. Do not write through symlinks/Junctions. To use Notion, configure target=notion and run notion check; to use Obsidian, configure target=obsidian and obsidian.vaultPath then run obsidian check. Keep credentials on stdin. Inspect schema for the installed runtime; Mac 0.1.0 lacks local setup/check.
+Use the actual OS path, not this placeholder. The setup creates the chosen folder and selects the local target. Notes are placed under savault/platform/collection with relative cover-image links. Do not write through symlinks/Junctions. To use Notion, configure target=notion and run notion check; to use Obsidian, configure target=obsidian and obsidian.vaultPath then run obsidian check. Keep credentials on stdin. Inspect schema for the installed runtime; older Mac 0.1.0 packages lack local setup/check, so upgrade before using these commands.
 
 After syncing, grant the AI host access to the selected local folder, or use a separate authorized Notion connector. This Skill does not provide Q&A MCP, train a model, or automatically turn content into installed Skills.
 
@@ -103,4 +103,4 @@ Do not ask the user to resend a full card number when `status` already reports `
 
 The skill is free; runtime/service terms and external provider costs are separate.
 
-Product and support: <https://product.aiprice.store/savault/>. Windows unified runtime: <https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6>. Mac CLI 0.1.0 remains in the earlier release linked by runtime.json.
+Product and support: <https://product.aiprice.store/savault/>. Windows / Mac unified runtime: <https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6>. Mac requires macOS 13+, with separate Apple silicon and Intel packages.
