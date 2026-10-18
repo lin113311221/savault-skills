@@ -6,6 +6,14 @@ Let AI call the local Savault CLI to organize your Xiaohongshu and Bilibili coll
 
 An Agent Skill for syncing your Xiaohongshu and Bilibili collections into Notion through the local Savault CLI.
 
+## Use your saved knowledge with AI
+
+Sync is the first step. After granting a compatible AI tool access to the resulting Notion pages or local notes, you can ask Codex, WorkBuddy, or another Agent to apply your saved methods with source references.
+
+**This Skill manages Notion sync jobs; it does not expose a Savault Q&A MCP or `ask`/`search` API.** Read synced Notion content through a separate authorized connector such as official Notion MCP. Savault's built-in Ask Your Collections is currently an Obsidian plugin feature.
+
+Read the [AI knowledge workflow and connection guide](docs/ai-knowledge-workflow.md), or start from the compact [Agent documentation index](llms.txt). Notes do not automatically become installed Skills or train the model. Current GUI capabilities should not be assumed to exist in the pinned CLI 0.1.0 runtime below.
+
 ## Install the Skill
 
 ```sh

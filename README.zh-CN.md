@@ -6,6 +6,14 @@
 
 这是一个通过本机 Savault CLI，将你的小红书和 B站收藏同步到 Notion 的 Agent Skill。
 
+## 让 AI 用上你收藏的好方法
+
+同步后，再授权 Codex、WorkBuddy 等工具读取对应 Notion 页面或本地笔记，便可让 AI 在具体任务里参考你选过的方法，并注明来源。
+
+**本 Skill 负责 Notion 同步和任务管理，不提供 Savault 问答 MCP 或 `ask`/`search` API。** 读取 Notion 内容需另接已授权的读取工具，例如官方 Notion MCP；Savault 内置“问收藏”目前属于 Obsidian 插件功能。
+
+见[AI 知识使用与连接指南](docs/ai-knowledge-workflow.md)及[Agent 文档索引](llms.txt)。收藏不会自动训练模型，也不会自动变成已安装的 Skill。下面固定的 CLI 0.1.0 运行包不能直接等同于最新桌面客户端能力。
+
 ## 安装 Skill
 
 ```sh
