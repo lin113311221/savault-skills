@@ -72,3 +72,11 @@ The Skill and helper scripts in this repository are MIT licensed. Savault runtim
 - [Savault Global](https://yourdreamlab.net/apps/savault/)
 
 The Global product page is a separate entry point. The local Savault CLI installation, supported platforms, licensing, and optional service terms are those documented above.
+
+## Contributor and Agent handoff
+
+Read [agentconversation.md](agentconversation.md) (Chinese) for repository responsibilities, source/version boundaries and a repeatable handoff. Keep this README and [README.zh-CN.md](README.zh-CN.md) aligned.
+
+Use a separate branch and submit a PR with the purpose and checks performed. The default branch requires a PR and one approving review, blocks force pushes and deletion, and retains the administrator exception. Public visitors can fork and propose changes; repository write access is granted separately.
+
+Do not include credentials, private notes or internal customer material in public examples, Issues or Agent handoffs.

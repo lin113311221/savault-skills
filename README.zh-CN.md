@@ -72,3 +72,11 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 - [Savault Global](https://yourdreamlab.net/apps/savault/)
 
 Global 产品页是独立入口。本机 Savault CLI 的安装方式、支持平台、软件许可及可选服务条款以上述说明为准。
+
+## 协作者与 Agent 接手
+
+阅读 [agentconversation.md](agentconversation.md)，了解本仓职责、版本边界与接手步骤。英文 README 与本文同步维护。
+
+使用独立分支提交 PR，说明目的和实际验证。默认分支要求 PR 与至少 1 人审核，禁止强推和删除，保留管理员例外。普通访客可以 Fork 和提议修改；写权限另行授予。
+
+公开示例、Issue 和 Agent 接手记录不包含凭据、私人笔记或内部客户资料。
