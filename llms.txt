@@ -7,10 +7,14 @@
 - [AI knowledge workflow and interface boundaries](https://github.com/lin113311221/savault-skills/blob/main/docs/ai-knowledge-workflow.md)
 - [Collection sync Skill](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/SKILL.md)
 - [Pinned runtime and SHA256](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/references/runtime.json)
-- [Current product and downloads](https://product.aiprice.store/savault/)
+- [Current desktop app and Obsidian plugin downloads](https://product.aiprice.store/savault/#downloads)
+- [Checksums for website downloads](https://product.aiprice.store/savault/downloads/SHA256SUMS.txt)
+- [First local Markdown sync](https://product.aiprice.store/savault/#local-guide)
+- [Historical Obsidian plugin v0.5.71](https://github.com/lin113311221/savault-plugin/releases/tag/v0.5.71)
+- [Savault Global: separate YouTube playlist CLI](https://yourdreamlab.net/apps/savault/)
 
-The public Skill supports sync/task management, not Savault Q&A MCP. Built-in Ask Your Collections is an Obsidian feature. Windows and Mac are pinned to unified 0.1.6.
+The public Skill supports sync/task management, not Savault Q&A MCP. The current desktop app and Obsidian plugin include Ask Your Collections. The Agent Skill installer pins its Windows and Mac runtime to 0.1.6.
 
-Windows / Mac unified 0.1.6: https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6
+Pinned Skill runtime release, Windows / Mac 0.1.6: https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6
 Local folder guide: https://github.com/lin113311221/savault-skills/blob/main/docs/local-folder.md
 Windows and Mac GUI+CLI support local Markdown / Notion / Obsidian. No Savault Q&A MCP.

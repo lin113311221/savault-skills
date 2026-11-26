@@ -2,12 +2,13 @@
 
 # Savault Collection Sync Skill
 
-## Windows / Mac 统一版 0.1.6
+## 下载与校验
 
-[下载统一包与校验文件](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6) · [本地文件夹使用说明](docs/local-folder.md)
+[官网下载页](https://product.aiprice.store/savault/#downloads)提供 Windows x64 桌面版（含 CLI，0.1.10）、Mac 预览版（0.1.10，macOS 13+，Apple 芯片或 Intel）和桌面 Obsidian 插件（0.5.75）。抖音收藏同步和分享链接导入仍为预览功能，首次请先同步一条，打开笔记核对来源。
 
-Windows 和 Mac 的每个下载包均包含 GUI 和 CLI，可保存到本地 Markdown 文件夹、Notion 或 Obsidian。无需安装笔记软件也可同步到本地，再授权 AI 读取；GUI 与 CLI 登录和配置分别保存。Mac 支持 macOS 13 及以上的 Apple 芯片和 Intel 机型。
+将下方命令中的 `YOUR-DOWNLOAD.zip` 换为实际文件名。解压前按 ZIP 完整文件名查[官网 SHA-256 清单](https://product.aiprice.store/savault/downloads/SHA256SUMS.txt)，用 Windows 的 `Get-FileHash ./YOUR-DOWNLOAD.zip -Algorithm SHA256` 或 macOS 的 `shasum -a 256 ./YOUR-DOWNLOAD.zip` 比对摘要。首次保存 Markdown 可按[本地文件夹入门](https://product.aiprice.store/savault/#local-guide)操作。
 
+Skill 安装器从 [GitHub 0.1.6 Release](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6) 下载[固定的 0.1.6 运行包](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/references/runtime.json)，并核对该版本的摘要。
 
 让 AI 调用本机 Savault；Windows 和 Mac 可把小红书和 B站收藏整理到本地文件夹、Notion 或 Obsidian。支持选择收藏夹、配置目标、启动同步、停止和查询任务。
 
@@ -17,7 +18,7 @@ Windows 和 Mac 的每个下载包均包含 GUI 和 CLI，可保存到本地 Mar
 
 同步后，再授权 Codex、WorkBuddy 等工具读取对应 Notion 页面或本地笔记，便可让 AI 在具体任务里参考你选过的方法，并注明来源。
 
-**本 Skill 负责收藏同步和任务管理，不提供 Savault 问答 MCP 或 `ask`/`search` API。** 读取 Notion 内容需另接已授权的读取工具，例如官方 Notion MCP；Savault 内置“问收藏”目前属于 Obsidian 插件功能。
+**本 Skill 负责收藏同步和任务管理，不提供 Savault 问答 MCP 或 `ask`/`search` API。** 读取 Notion 内容需另接已授权的读取工具，例如官方 Notion MCP；官网下载的桌面客户端和 Obsidian 插件均提供“问收藏”，需有效 AI 权益。
 
 见[AI 知识使用与连接指南](docs/ai-knowledge-workflow.md)及[Agent 文档索引](llms.txt)。收藏不会自动训练模型，也不会自动变成已安装的 Skill。Windows 和 Mac 固定运行包均为统一版 0.1.6，请按安装版本的 schema 使用命令。
 
@@ -29,13 +30,13 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 
 也可以下载本仓库，将 `skills/savault-notion` 文件夹放入你使用的 Agent 的技能目录。Skill 使用标准 `SKILL.md` 格式；宿主需要能执行本地命令。
 
-## 安装运行包
+## 安装 Skill 固定的 0.1.6 运行包
 
 安装 Skill 后，告诉你的 Agent：
 
 > 使用 savault-notion 技能，检查并安装 Savault CLI，引导我选择本地文件夹或 Notion，再列出我的小红书收藏夹。先不要同步。
 
-技能自带安装助手，会下载与你电脑匹配的 CLI 并校验 SHA256。你也可以手动下载：
+技能自带安装助手，会下载与你电脑匹配的 CLI 并校验 SHA256。也可在下表手动下载同一版本。
 
 | 系统 | 运行包 |
 |---|---|
@@ -71,7 +72,7 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 - [Dream Bridge Lab](https://github.com/dreambridgelab)
 - [Savault Global](https://yourdreamlab.net/apps/savault/)
 
-Global 产品页是独立入口。本机 Savault CLI 的安装方式、支持平台、软件许可及可选服务条款以上述说明为准。
+Savault Global 是独立的英文 CLI，可将本人 YouTube 播放列表保存为 Markdown。本页 Skill 适用于上文列出的收藏平台。
 
 ## 协作者与 Agent 接手
 

@@ -2,12 +2,13 @@
 
 # Savault Collection Sync Skill
 
-## Windows and Mac unified 0.1.6
+## Downloads
 
-[Download package and checksums](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6) · [Local folder guide](docs/local-folder.md)
+The [official downloads page](https://product.aiprice.store/savault/#downloads) lists the Windows x64 desktop app with CLI (0.1.10), macOS 13+ previews for Apple silicon and Intel (0.1.10), and the desktop Obsidian plugin (0.5.75). The Douyin collection and share-link features are in preview. Start with one item and check the resulting note and source link.
 
-Each Windows or Mac package includes GUI and CLI, with local Markdown, Notion and Obsidian destinations. Local mode needs no note-taking app; grant your AI tool folder access after syncing. GUI and CLI profiles remain separate. Mac supports macOS 13+ on Apple silicon and Intel.
+Replace `YOUR-DOWNLOAD.zip` in the commands below with the ZIP you downloaded. Match its filename to the [official SHA-256 list](https://product.aiprice.store/savault/downloads/SHA256SUMS.txt). Use `Get-FileHash ./YOUR-DOWNLOAD.zip -Algorithm SHA256` on Windows or `shasum -a 256 ./YOUR-DOWNLOAD.zip` on macOS to compare the digest before extracting. For your first Markdown note, follow the [local folder guide](https://product.aiprice.store/savault/#local-guide).
 
+The Skill installer uses the [pinned 0.1.6 runtime](https://github.com/lin113311221/savault-skills/blob/main/skills/savault-notion/references/runtime.json) from the [0.1.6 GitHub release](https://github.com/lin113311221/savault-skills/releases/tag/desktop-v0.1.6). Its downloads and checksums apply to that version.
 
 Let AI call the local Savault CLI to organize your Xiaohongshu and Bilibili collections in a local Markdown folder, Notion or Obsidian on Windows or Mac. The Skill supports selecting collections, configuring destinations, starting and stopping syncs, and checking tasks.
 
@@ -17,7 +18,7 @@ The installed Skill name remains savault-notion for compatibility.
 
 Sync is the first step. After granting a compatible AI tool access to the resulting Notion pages or local notes, you can ask Codex, WorkBuddy, or another Agent to apply your saved methods with source references.
 
-**This Skill manages collection sync jobs; it does not expose a Savault Q&A MCP or `ask`/`search` API.** Read synced Notion content through a separate authorized connector such as official Notion MCP. Savault's built-in Ask Your Collections is currently an Obsidian plugin feature.
+**This Skill manages collection sync jobs; it does not expose a Savault Q&A MCP or `ask`/`search` API.** Read synced Notion content through a separate authorized connector such as official Notion MCP. The current desktop app and Obsidian plugin offer Ask Your Collections with an active AI entitlement.
 
 Read the [AI knowledge workflow and connection guide](docs/ai-knowledge-workflow.md), or start from the compact [Agent documentation index](llms.txt). Notes do not automatically become installed Skills or train the model. Windows and Mac are pinned to unified 0.1.6. Check the installed schema before using destination-specific commands.
 
@@ -29,13 +30,13 @@ npx skills add lin113311221/savault-skills --skill savault-notion
 
 You can also download this repository and place the `skills/savault-notion` folder in your Agent's skills directory. The Skill uses the standard `SKILL.md` format; the host must be able to execute local commands.
 
-## Install the Runtime
+## Install the Skill’s pinned 0.1.6 runtime
 
 After installing the Skill, tell your Agent:
 
 > Use the savault-notion Skill to check and install the Savault CLI, help me choose a local folder or Notion, and then list my Xiaohongshu collections. Do not sync yet.
 
-The Skill includes an installation helper that downloads the CLI matching your computer and verifies its SHA256. You can also download it manually:
+The Skill includes an installation helper that downloads the CLI matching your computer and verifies its SHA256. The same 0.1.6 archives are available below.
 
 | System | Runtime |
 |---|---|
@@ -71,7 +72,7 @@ The Skill and helper scripts in this repository are MIT licensed. Savault runtim
 - [Dream Bridge Lab](https://github.com/dreambridgelab)
 - [Savault Global](https://yourdreamlab.net/apps/savault/)
 
-The Global product page is a separate entry point. The local Savault CLI installation, supported platforms, licensing, and optional service terms are those documented above.
+Savault Global is a separate English-language CLI for saving your own YouTube playlists to Markdown. The Skill on this page is for the collection platforms listed above.
 
 ## Contributor and Agent handoff
 
